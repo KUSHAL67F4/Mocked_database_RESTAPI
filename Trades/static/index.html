@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Trades Webpage - Home</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div id="homePage" class="background-home">
+        <h1>Welcome to the Trades Webpage!</h1>
+        <form id="filtersForm">
+            <label for="assetClass">Asset Class:</label>
+            <input type="text" id="assetClass" name="assetClass"><br><br>
+
+            <label for="startDate">Start Date:</label>
+            <input type="date" id="startDate" name="startDate"><br><br>
+
+            <label for="endDate">End Date:</label>
+            <input type="date" id="endDate" name="endDate"><br><br>
+
+            <label for="minPrice">Minimum Price:</label>
+            <input type="number" id="minPrice" name="minPrice"><br><br>
+
+            <label for="maxPrice">Maximum Price:</label>
+            <input type="number" id="maxPrice" name="maxPrice"><br><br>
+
+            <label for="tradeType">Trade Type:</label>
+            <input type="text" id="tradeType" name="tradeType"><br><br>
+
+            <button id="fetchButton" type="button" onclick="fetchTrades()">Fetch Trades</button>
+        </form>
+    </div>
+    <div id="tablePage" style="display: none;">
+        <h2>Trades</h2>
+        <table id="tradesTable">
+        </table>
+        <button id="backButton" type="button" onclick="goBack()" style="display: none;">Go Back</button>
+    </div>
+
+    <script>
+        // Function to fetch trades and show the table
+        function fetchTrades() {
+            const assetClass = document.getElementById('assetClass').value;
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate').value;
+            const minPrice = parseFloat(document.getElementById('minPrice').value);
+            const maxPrice = parseFloat(document.getElementById('maxPrice').value);
+            const tradeType = document.getElementById('tradeType').value;
+
+            const queryParams = new URLSearchParams();
+            if (assetClass) queryParams.append('assetClass', assetClass);
+            if (startDate) queryParams.append('startDate', startDate);
+            if (endDate) queryParams.append('endDate', endDate);
+            if (!isNaN(minPrice)) queryParams.append('minPrice', minPrice);
+            if (!isNaN(maxPrice)) queryParams.append('maxPrice', maxPrice);
+            if (tradeType) queryParams.append('tradeType', tradeType);
+
+            const queryString = queryParams.toString();
+            const url = `/api/trades?${queryString}`;
+
+            fetch(url)
+                .then((response) => response.json())
+                .then((data) => {
+                    const tradesTable = document.createElement('table');
+
+                    // Create table header
+                    const tableHeaderRow = document.createElement('tr');
+                    for (const key in data[0]) {
+                        const th = document.createElement('th');
+                        th.textContent = key;
+                        tableHeaderRow.appendChild(th);
+                    }
+                    tradesTable.appendChild(tableHeaderRow);
+
+                    // Create table rows
+                    data.forEach((trade) => {
+                        const tableRow = document.createElement('tr');
+                        for (const key in trade) {
+                            const td = document.createElement('td');
+                            td.textContent = trade[key];
+                            tableRow.appendChild(td);
+                        }
+                        tradesTable.appendChild(tableRow);
+                    });
+
+                    // Hide the home page and display the trades table
+                    document.getElementById('homePage').style.display = 'none';
+                    document.getElementById('tablePage').style.display = 'block';
+                    document.getElementById('tradesTable').appendChild(tradesTable);
+                    document.getElementById('backButton').style.display = 'block';
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        }
+
+        function goBack() {
+            // Show the home page and hide the table page
+            document.getElementById('homePage').style.display = 'block';
+            document.getElementById('tablePage').style.display = 'none';
+            document.getElementById('backButton').style.display = 'none';
+            document.getElementById('tradesTable').innerHTML = '';
+        }
+    </script>
+</body>
+</html>

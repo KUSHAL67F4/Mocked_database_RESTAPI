@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Trades Webpage - Database</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <style>
+        /* Your CSS styles here */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <h2>Trades</h2>
+    <table id="tradesTable">
+    </table>
+    <button id="backButton" type="button" onclick="goBack()">Go Back</button>
+
+    <script>
+        function goBack() {
+            window.location.href = '/';
+        }
+    </script>
+</body>
+</html>

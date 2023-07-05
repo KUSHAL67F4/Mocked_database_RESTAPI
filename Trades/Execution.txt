@@ -1,0 +1,3 @@
+Type "python -m uvicorn app:fsapi --reload" in cmd
+
+go to: localhost:8000/

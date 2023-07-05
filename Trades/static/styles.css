@@ -1,0 +1,49 @@
+.background-home{
+    background-image: url("/static/");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    
+}
+
+#homePage{
+    font-family: Courier New, monospace;
+    padding: 20px;
+}
+
+h1 {
+    font-family: Times New Roman, serif;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+h1, h2, p {
+    color: #000000; 
+    text-shadow: 2px 2px 4px rgba(255, 0, 0, 0.5);
+  }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    color: darkred;
+}
+
+
+.fetchButton {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+  }
